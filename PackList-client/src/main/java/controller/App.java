@@ -55,11 +55,13 @@ public class App {
                 List<User> userList = UserController.getUsersFromDb();
                 currentUser = UserController.selectUser(userList);
                 System.out.println(currentUser.getUsername() + " logged in");
+                break;
             } else if (MENU_REGISTER.equals(choice)) {
                 //TODO figure out verification
                 currentUser = UserController.registerNewUser();
                 System.out.println(currentUser.getUser_id() + " " +
                         currentUser.getUsername() + " registered");
+                break;
             }else {
                 exitProgram();
             }

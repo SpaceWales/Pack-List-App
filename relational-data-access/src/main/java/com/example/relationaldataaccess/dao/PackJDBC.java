@@ -2,7 +2,10 @@ package com.example.relationaldataaccess.dao;
 
 import com.example.relationaldataaccess.model.Item;
 import com.example.relationaldataaccess.model.Pack;
+import com.example.relationaldataaccess.model.Packlist;
+import com.example.relationaldataaccess.model.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,21 +18,36 @@ public class PackJDBC implements PackDAO{
     public PackJDBC(JdbcTemplate jdbcTemplate) {this.template = jdbcTemplate;}
 
     @Override
-    public Pack createPack(Pack pack) {
+    public Packlist createPack(Packlist packlist) {
         //pack will come in with a list of items
         //all items will go in pack_id 1 until users get figured out
 
         //TODO figure out pack_id
 
-        List<Item> itemList = pack.getItemList();
+        //need to sql insert packlist with with and user_id
+
+        String createPacklistDB = "insert into packlist (user_id) values (?)";
+        template.update(createPacklistDB,packlist.getUser().getUser_id());
+
+        //need to query for pack_id, //TODO working on it
+
+        //this is potentially disastrous but.. idk a better way right nwo
+        int pack_id = 0;
+        String getPackId = "select * from packlist where user_id = ? order by pack_id desc limit 1";
+        SqlRowSet getterPack = template.queryForRowSet(getPackId,packlist.getUser().getUser_id());
+        if(getterPack.next()){
+            pack_id = getterPack.getInt("pack_id");
+        }
+
+        List<Item> itemList = packlist.getPack().getItemList();
         for(Item item : itemList){
             String sql = "insert into item (pack_id,item_name,item_weight,weight_unit)" +
                     "values(?,?,?,?)";
-            //temp value
-            int pack_id = 1;
+
             template.update(sql,pack_id,item.getItem_name(),
                     item.getItem_weight(),item.getWeight_unit());
         }
-        return pack;
+        return packlist;
     }
+
 }

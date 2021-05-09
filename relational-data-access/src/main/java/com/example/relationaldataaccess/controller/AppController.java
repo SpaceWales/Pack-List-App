@@ -5,6 +5,7 @@ import com.example.relationaldataaccess.dao.PackDAO;
 import com.example.relationaldataaccess.dao.TripDAO;
 import com.example.relationaldataaccess.dao.UserDAO;
 import com.example.relationaldataaccess.model.Pack;
+import com.example.relationaldataaccess.model.Packlist;
 import com.example.relationaldataaccess.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +27,12 @@ public class AppController {
     @Autowired
     UserDAO userDAO;
 
+    //this needs to be accepting a user, I have no way to get pack ID from user currently
+    //Doing multiple rest calls or adding the user ID to pack is a last resort
+    //todo come back too later
     @RequestMapping(path="/createpack",method = RequestMethod.POST)
-    public Pack createPackMapping(@RequestBody Pack pack){
-        return packDAO.createPack(pack);
+    public Packlist createPackMapping(@RequestBody Packlist packlist){
+        return packDAO.createPack(packlist);
     }
 
     @RequestMapping(path="/getAllUsers",method = RequestMethod.GET)

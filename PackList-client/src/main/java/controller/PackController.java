@@ -2,10 +2,10 @@ package controller;
 
 import model.Item;
 import model.Pack;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
+import model.Packlist;
 import org.springframework.web.client.RestTemplate;
 import view.Menu;
+
 
 public class PackController {
 
@@ -16,7 +16,7 @@ public class PackController {
     public static Menu menu = new Menu(System.in,System.out);
     RestTemplate restTemplate = new RestTemplate();
 
-    public Pack createPack(){
+    public Packlist createPack(){
         System.out.println("Creating a new Pack");
         Pack pack = new Pack();
 
@@ -32,12 +32,27 @@ public class PackController {
             }
         }
         //build entity and ship template
+
         //Users are not initialized yet, still working on that
 
-        pack = restTemplate.postForObject(Entity.BASE_URL + "/createpack",
-                Entity.createJSONEntity(pack),Pack.class);
+        //There is probably a better way to do this, right now user info
+        // and pack are built
+        //into an entity to send together
+//        List<Object> packaged = new ArrayList<>();
+//        packaged.add(pack);
+//        packaged.add(App.currentUser);
 
-        return pack;
+        //TODO SO says you need to wrap the 2 objects into a 3rd, passing it as
+        //TODO a list is not working, at least not to my understanding
+
+        Packlist packlist = new Packlist();
+        packlist.setPack(pack);
+        packlist.setUser(App.currentUser);
+
+        packlist = restTemplate.postForObject(Entity.BASE_URL + "/createpack",
+                Entity.createJSONEntity(packlist),Packlist.class);
+
+        return packlist;
     }
 
 }

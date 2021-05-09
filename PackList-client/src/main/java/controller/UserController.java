@@ -46,11 +46,13 @@ public class UserController {
                 }
             }
             //TODO this is still wonky with verification
-            System.out.println("must be valid user: ");
-            while(!in.hasNextInt()){
-                in.next();
+            if(!valid){System.out.println("must be valid user: ");
+                while(!in.hasNextInt()){
+                    in.next();
+                }
+                userId = in.nextInt();
             }
-            userId = in.nextInt();
+
         }
         return current;
     }

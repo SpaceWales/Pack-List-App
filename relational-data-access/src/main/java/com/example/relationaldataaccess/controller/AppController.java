@@ -27,9 +27,7 @@ public class AppController {
     @Autowired
     UserDAO userDAO;
 
-    //this needs to be accepting a user, I have no way to get pack ID from user currently
-    //Doing multiple rest calls or adding the user ID to pack is a last resort
-    //todo come back too later
+
     @RequestMapping(path="/createpack",method = RequestMethod.POST)
     public Packlist createPackMapping(@RequestBody Packlist packlist){
         return packDAO.createPack(packlist);

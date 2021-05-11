@@ -23,8 +23,6 @@ public class PackJDBC implements PackDAO{
         //Pack-> List of items
         //User-> username and id
 
-        //TODO figure out pack_id
-
         //need to sql insert packlist with with and user_id
 
         String createPacklistDB = "insert into packlist (user_id) values (?)";

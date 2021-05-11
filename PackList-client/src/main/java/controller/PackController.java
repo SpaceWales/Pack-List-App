@@ -33,18 +33,6 @@ public class PackController {
         }
         //build entity and ship template
 
-        //Users are not initialized yet, still working on that
-
-        //There is probably a better way to do this, right now user info
-        // and pack are built
-        //into an entity to send together
-//        List<Object> packaged = new ArrayList<>();
-//        packaged.add(pack);
-//        packaged.add(App.currentUser);
-
-        //TODO SO says you need to wrap the 2 objects into a 3rd, passing it as
-        //TODO a list is not working, at least not to my understanding
-
         Packlist packlist = new Packlist();
         packlist.setPack(pack);
         packlist.setUser(App.currentUser);

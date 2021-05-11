@@ -19,8 +19,9 @@ public class PackJDBC implements PackDAO{
 
     @Override
     public Packlist createPack(Packlist packlist) {
-        //pack will come in with a list of items
-        //all items will go in pack_id 1 until users get figured out
+        //packlist comes in with
+        //Pack-> List of items
+        //User-> username and id
 
         //TODO figure out pack_id
 
@@ -29,9 +30,7 @@ public class PackJDBC implements PackDAO{
         String createPacklistDB = "insert into packlist (user_id) values (?)";
         template.update(createPacklistDB,packlist.getUser().getUser_id());
 
-        //need to query for pack_id, //TODO working on it
-
-        //this is potentially disastrous but.. idk a better way right nwo
+        //this is potentially disastrous but.. idk a better way right now
         int pack_id = 0;
         String getPackId = "select * from packlist where user_id = ? order by pack_id desc limit 1";
         SqlRowSet getterPack = template.queryForRowSet(getPackId,packlist.getUser().getUser_id());
@@ -39,6 +38,7 @@ public class PackJDBC implements PackDAO{
             pack_id = getterPack.getInt("pack_id");
         }
 
+        //push items into database with associated pack_id
         List<Item> itemList = packlist.getPack().getItemList();
         for(Item item : itemList){
             String sql = "insert into item (pack_id,item_name,item_weight,weight_unit)" +

@@ -25,3 +25,11 @@ insert into item (pack_id,item_name,item_weight,weight_unit) values (2,'water',3
 
 insert into user_trip (user_id,trip_id) values(1,1);
 insert into user_trip (user_id,trip_id) values(2,1);
+
+insert into packlist(user_id) values(5);
+
+select * from packlist where user_id = 5 order by pack_id desc limit 1;
+
+select * from packlist
+join item on packlist.user_id = item.pack_id where user_id = 2;
+
